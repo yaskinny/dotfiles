@@ -60,5 +60,6 @@ nnoremap <F3> :noh<CR>
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
+hi Normal guibg=NONE ctermbg=NONE
 
 let g:syntastic_mode_map = { "mode": "passive", "active_filetypes": [], "passive_filetypes": [] }
