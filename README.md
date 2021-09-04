@@ -9,6 +9,9 @@ Deps:
     - .bashrc
         - export FZF_DEFAULT_OPTS="--layout=reverse --border -m --height=40%"
         - [ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
+- init.vim for nvim
+- .vimrc for vim
 ---
 # tmux
 Deps;

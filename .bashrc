@@ -11,10 +11,6 @@ cmdir ()
     fi
 }
 
-
-
-
-
 if command -v kubectl &>/dev/null; then
   source <(kubectl completion bash)
 fi
@@ -29,13 +25,24 @@ fi
 if command -v helm &>/dev/null; then
   source <(helm completion bash)
 fi
-if command -v vim.gtk3 &>/dev/null; then
-  alias vim=/usr/bin/vim.gtk3
+if command -v nvim &>/dev/null; then
+  alias vim=nvim
 fi
 
 alias k=kubectl
 _completion_loader kubectl
 complete -o default -o nospace -o bashdefault -F __start_kubectl k
+kcn() {
+    if [[ ! -z ${1} ]]; then
+        if kubectl get ns | grep ${1} -q ; then
+            kubectl config set-context --current --namespace $1
+        else
+            printf >&2 "%s\n" "${1} does not exist"
+        fi
+    else
+        printf >&2 "%s\n" "no namespace given"
+    fi
+}
 
 alias g=git
 _completion_loader git
@@ -47,7 +54,26 @@ alias a=ansible
 alias ap=ansible-playbook
 alias adc="ansible-doc"
 
+cce(){
+  command -v ccrypt &>/dev/null || printf >&2 "%s\n" "ccrypt is not installed."
+  [[ ! -z "${1}" && -f "${1}" ]] && { ccrypt -b -e ${1} && mv "${1}.cpt" "${1}" ; } || printf >&2 "%s\n" "cce fileName"
+}
+alias ccd="ccrypt -d /home/yaser/trash"
+ccd(){
+  command -v ccrypt &>/dev/null || printf >&2 "%s\n" "ccrypt is not installed."
+  [[ ! -z "${1}" && -f "${1}" ]] && ccrypt -d "${1}" || printf >&2 "%s\n" "ccd encryptedFileName"
+}
+ccv(){
+  command -v ccrypt &>/dev/null || printf >&2 "%s\n" "ccrypt is not installed."
+  [[ ! -z "${1}" && -f "${1}" ]] && ccrypt -c "${1}" || printf >&2 "%s\n" "ccv encryptedFileName"
+}
+
+alias ccv="ccrypt -c /home/yaser/trash"
 
 export FZF_DEFAULT_OPTS="--layout=reverse --border -m --height=40%"
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
 export PS1='${debian_chroot:+($debian_chroot)}\[\033[02;31m\]\u@\[\033[00m\]\[\033[01;33m\]\w \n~> \[\033[00m\]'
+
+
+
