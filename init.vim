@@ -1,4 +1,5 @@
-set relativenumber
+set number
+set ruler
 syntax on
 filetype on
 set mouse=a
@@ -22,7 +23,6 @@ set shiftwidth=4
 inoremap jk <ESC>
 
 
-set ruler
 
 call plug#begin('~/.config/nvim/plugged')
 Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
@@ -30,6 +30,7 @@ Plug 'bling/vim-airline'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+Plug 'fatih/molokai'
 Plug 'vim-syntastic/syntastic'
 Plug 'Matt-Deacalion/vim-systemd-syntax'
 Plug 'terryma/vim-multiple-cursors'
@@ -40,7 +41,7 @@ Plug 'tpope/vim-commentary'
 call plug#end()
 
 
-autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab commentstring=#\ %s 
+autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab cursorcolumn commentstring=#\ %s 
 autocmd FileType sh setlocal ts=2 sts=2 sw=2 expandtab commentstring=#\ %s
 autocmd FileType rs setlocal ts=2 sts=2 sw=2 expandtab commentstring=//\ %s 
 autocmd FileType go setlocal ts=2 sts=2 sw=2  expandtab commentstring=//\ %s 
@@ -143,7 +144,7 @@ let g:syntastic_mode_map = { "mode": "passive", "active_filetypes": [], "passive
 hi Normal guibg=NONE ctermbg=NONE
 set statusline+=%#warningmsg#
 let g:rainbow_active = 1
-color solarized8_dark_flat
+color gruvbox
 map <space> <NOP>
 map <space> :FZF<CR>
 noremap <C-F> :Rg<CR>
@@ -169,8 +170,11 @@ map <C-h> :tabp<CR>
 map <F5> :tabnew<CR>
 syntax enable
 filetype plugin indent on
+let g:go_highlight_trailing_whitespace_error=0
 
 
 
+let g:go_auto_type_info = 1
 
-
+set colorcolumn=120
+hi ColorColumn ctermbg=darkgray
