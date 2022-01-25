@@ -22,14 +22,16 @@ set shiftwidth=4
 
 inoremap jk <ESC>
 
-
-
 call plug#begin('~/.config/nvim/plugged')
+Plug 'dracula/vim'
+Plug 'rottencandy/vimkubectl'
+Plug 'hashivim/vim-terraform'
 Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
 Plug 'bling/vim-airline'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+Plug 'preservim/nerdtree'
 Plug 'fatih/molokai'
 Plug 'vim-syntastic/syntastic'
 Plug 'Matt-Deacalion/vim-systemd-syntax'
@@ -139,12 +141,14 @@ nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
 
 
 ab ien if err != nil {
+
+ab absub 0.0.0.0
 nmap <leader>r :GoRun<CR>
 let g:syntastic_mode_map = { "mode": "passive", "active_filetypes": [], "passive_filetypes": [] }
-hi Normal guibg=NONE ctermbg=NONE
+"hi Normal guibg=NONE ctermbg=NONE
 set statusline+=%#warningmsg#
 let g:rainbow_active = 1
-color gruvbox
+color dracula
 map <space> <NOP>
 map <space> :FZF<CR>
 noremap <C-F> :Rg<CR>
@@ -178,3 +182,5 @@ let g:go_auto_type_info = 1
 
 set colorcolumn=120
 hi ColorColumn ctermbg=darkgray
+hi Normal guibg=NONE ctermbg=NONE
+set autoindent
