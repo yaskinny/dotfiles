@@ -1,48 +1,54 @@
-set number
-set ruler
-syntax on
-filetype on
-set mouse=a
-set title
-set clipboard=unnamedplus
-set hlsearch
-set ignorecase
-set smartcase
-set incsearch
-set encoding=utf-8
-set linebreak
-set wrap
-set autoindent
-set noswapfile
-set nobackup
-set nowritebackup
-set tabstop=4
-set expandtab
-set shiftwidth=4
+set shell=bash
 
-inoremap jk <ESC>
+" Plugins
+call plug#begin('~/.vim/plugged')
 
-call plug#begin('~/.config/nvim/plugged')
-Plug 'dracula/vim'
-Plug 'rottencandy/vimkubectl'
-Plug 'hashivim/vim-terraform'
-Plug 'neoclide/coc.nvim', {'do': 'yarn install --frozen-lockfile'}
-Plug 'bling/vim-airline'
+Plug 'vim-airline/vim-airline'
+Plug 'sheerun/vim-polyglot'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
-Plug 'preservim/nerdtree'
-Plug 'fatih/molokai'
-Plug 'vim-syntastic/syntastic'
-Plug 'Matt-Deacalion/vim-systemd-syntax'
-Plug 'terryma/vim-multiple-cursors'
-Plug 'flazz/vim-colorschemes'
-Plug 'rust-lang/rust.vim'
-Plug 'luochen1990/rainbow'
+Plug 'editorconfig/editorconfig-vim'
 Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-surround'
+Plug 'joshdick/onedark.vim'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'Shougo/neosnippet.vim'
+Plug 'Shougo/neosnippet-snippets'
+Plug 'unblevable/quick-scope'
+
 call plug#end()
 
 
+syntax on
+filetype on
+set number
+set title
+set clipboard=unnamedplus
+set cc=120
+set shiftwidth=2
+set tabstop=2
+set noai
+set number
+set cmdheight=2
+set ignorecase
+set ruler
+set smartcase
+set hlsearch
+set magic
+set foldcolumn=1
+set nowb
+set noswapfile
+set expandtab
+set smartindent
+set wrap
+set hidden
+set mouse=
+set updatetime=300
+set nobackup
+set nowritebackup
+set signcolumn=yes
+set completeopt=menu,menuone,preview,noselect,noinsert
 autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab cursorcolumn commentstring=#\ %s 
 autocmd FileType sh setlocal ts=2 sts=2 sw=2 expandtab commentstring=#\ %s
 autocmd FileType rs setlocal ts=2 sts=2 sw=2 expandtab commentstring=//\ %s 
@@ -51,11 +57,8 @@ autocmd FileType bash setlocal ts=2 sts=2 sw=2 expandtab commentstring=#\ %s
 autocmd FileType cpp setlocal ts=2 sts=2 sw=2 expandtab commentstring=//%s
 autocmd FileType cs setlocal ts=2 sts=2 sw=2 expandtab commentstring=//%s
 autocmd FileType txt setlocal ts=2 sts=2 sw=2 expandtab commentstring=#\ %s 
-autocmd FileType * let b:coc_suggest_disable = 1
 autocmd FileType * :highlight CocFloating ctermbg=black
 autocmd FileType * :highlight CocFloating ctermfg=white
-
-" fix some fat finger shits
 cnoreabbrev W! w!
 cnoreabbrev Q! q!
 cnoreabbrev Qall! qall!
@@ -66,39 +69,18 @@ cnoreabbrev WQ wq
 cnoreabbrev W w
 cnoreabbrev Q q
 cnoreabbrev Qall qall
-
-
 let g:go_def_mapping_enabled = 0
-
-" -------------------------------------------------------------------------------------------------
-" coc.nvim default settings
-" -------------------------------------------------------------------------------------------------
-
-" if hidden is not set, TextEdit might fail.
 set hidden
-" Better display for messages
 set cmdheight=2
-" Smaller updatetime for CursorHold & CursorHoldI
 set updatetime=300
-" don't give |ins-completion-menu| messages.
 set shortmess+=c
-" always show signcolumns
 set signcolumn=yes
 
-" Use tab for trigger completion with characters ahead and navigate.
-" Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-
 function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
+	  let col = col('.') - 1
+	    return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
 
-" Use <c-space> to trigger completion.
 inoremap <silent><expr> <c-space> coc#refresh()
 
 " Use `[c` and `]c` to navigate diagnostics
@@ -145,7 +127,6 @@ ab ien if err != nil {
 ab absub 0.0.0.0
 nmap <leader>r :GoRun<CR>
 let g:syntastic_mode_map = { "mode": "passive", "active_filetypes": [], "passive_filetypes": [] }
-"hi Normal guibg=NONE ctermbg=NONE
 set statusline+=%#warningmsg#
 let g:rainbow_active = 1
 color dracula
@@ -182,5 +163,80 @@ let g:go_auto_type_info = 1
 
 set colorcolumn=120
 hi ColorColumn ctermbg=darkgray
-hi Normal guibg=NONE ctermbg=NONE
 set autoindent
+
+
+let mapleader = ","
+let g:mapleader = ","
+
+
+let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
+
+nmap <leader>f :GFiles<CR>
+nmap <leader>F :GFiles?<CR>
+nmap <leader>g :Ag 
+
+nmap gs  <plug>(GrepperOperator)
+
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+
+imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+xmap <C-k>     <Plug>(neosnippet_expand_target)
+
+vnoremap <silent> * :<C-u>call VisualSelection('', '')<CR>/<C-R>=@/<CR><CR>
+
+au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+
+function! VisualSelection(direction, extra_filter) range
+  let l:saved_reg = @"
+  execute "normal! vgvy"
+
+  let l:pattern = escape(@", '\\/.*$^~[]')
+  let l:pattern = substitute(l:pattern, "\n$", "", "")
+
+  if a:direction == 'gv'
+    call CmdLine("Ag \"" . l:pattern . "\" " )
+  elseif a:direction == 'replace'
+    call CmdLine("%s" . '/'. l:pattern . '/')
+  endif
+
+  let @/ = l:pattern
+  let @" = l:saved_reg
+endfunction
+
+cnoremap <Down> <Nop>
+cnoremap <Left> <Nop>
+cnoremap <Right> <Nop>
+cnoremap <Up> <Nop>
+cnoremap <C-j> <Down>
+cnoremap <C-h> <Left>
+cnoremap <C-l> <Right>
+cnoremap <C-k> <Up>
+inoremap <Down> <Nop>
+inoremap <Left> <Nop>
+inoremap <Right> <Nop>
+inoremap <Up> <Nop>
+nnoremap <Down> <Nop>
+nnoremap <Left> <Nop>
+nnoremap <Right> <Nop>
+nnoremap <Up> <Nop>
+vnoremap <Down> <Nop>
+vnoremap <Left> <Nop>
+vnoremap <Right> <Nop>
+vnoremap <Up> <Nop>
+inoremap jk <ESC>
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+hi Normal guibg=NONE ctermbg=NONE

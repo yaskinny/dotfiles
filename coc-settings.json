@@ -1,5 +1,5 @@
 {
-  "suggest.AutoTrigger": "none",
+  "suggest.autoTrigger": "none",
   "suggest.floatEnable": false,
   "diagnostic.messageTarget": "echo",
   "signature.target": "echo",
