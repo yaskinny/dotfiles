@@ -1,0 +1,20 @@
+[user]
+	name = yaser
+[init]
+	defaultBranch = master
+[diff]
+	tool = nvimdiff3
+[alias]
+	s = status
+	ss = status -s
+	ssc = status -s .
+	lg = log --graph --oneline
+  sb = switch -
+  sw = switch
+  sc = switch -c
+	l = log
+	su = submodule
+	ac = add .
+[merge]
+	conflictStyle = diff3
+	tool = nvimdiff3

@@ -5,7 +5,7 @@ font:
   normal:
     family: Noto Mono
     style: Regular
-  size: 12.0
+  size: 11.0
 
 # Colors (Darkside)
 custom_cursor_colors: true

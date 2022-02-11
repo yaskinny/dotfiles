@@ -1,8 +1,8 @@
-set shell=bash
+
 
 " Plugins
 call plug#begin('~/.vim/plugged')
-
+Plug 'morhetz/gruvbox'
 Plug 'vim-airline/vim-airline'
 Plug 'sheerun/vim-polyglot'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
@@ -16,39 +16,13 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'Shougo/neosnippet.vim'
 Plug 'Shougo/neosnippet-snippets'
 Plug 'unblevable/quick-scope'
-
+Plug 'pearofducks/ansible-vim'
+Plug 'andrewstuart/vim-kubernetes'
+Plug 'preservim/nerdtree'
+Plug 'altercation/vim-colors-solarized'
 call plug#end()
-
-
 syntax on
 filetype on
-set number
-set title
-set clipboard=unnamedplus
-set cc=120
-set shiftwidth=2
-set tabstop=2
-set noai
-set number
-set cmdheight=2
-set ignorecase
-set ruler
-set smartcase
-set hlsearch
-set magic
-set foldcolumn=1
-set nowb
-set noswapfile
-set expandtab
-set smartindent
-set wrap
-set hidden
-set mouse=
-set updatetime=300
-set nobackup
-set nowritebackup
-set signcolumn=yes
-set completeopt=menu,menuone,preview,noselect,noinsert
 autocmd FileType yaml setlocal ts=2 sts=2 sw=2 expandtab cursorcolumn commentstring=#\ %s 
 autocmd FileType sh setlocal ts=2 sts=2 sw=2 expandtab commentstring=#\ %s
 autocmd FileType rs setlocal ts=2 sts=2 sw=2 expandtab commentstring=//\ %s 
@@ -70,12 +44,6 @@ cnoreabbrev W w
 cnoreabbrev Q q
 cnoreabbrev Qall qall
 let g:go_def_mapping_enabled = 0
-set hidden
-set cmdheight=2
-set updatetime=300
-set shortmess+=c
-set signcolumn=yes
-
 function! s:check_back_space() abort
 	  let col = col('.') - 1
 	    return !col || getline('.')[col - 1]  =~# '\s'
@@ -122,34 +90,28 @@ nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
 
 
 
+ab traefikapi apiVersion: traefik.containo.us/v1alpha1
+ab certapi apiVersion: cert-manager.io/v1
+ab ingressapi apiVersion: networking.k8s.io/v1
 ab ien if err != nil {
-
 ab absub 0.0.0.0
 nmap <leader>r :GoRun<CR>
 let g:syntastic_mode_map = { "mode": "passive", "active_filetypes": [], "passive_filetypes": [] }
-set statusline+=%#warningmsg#
+
 let g:rainbow_active = 1
 color dracula
+colorscheme gruvbox
 map <space> <NOP>
 map <space> :FZF<CR>
 noremap <C-F> :Rg<CR>
 nnoremap <F3> :noh<CR>
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
+
+
 map = :GoTest<CR>
-set autoindent
-set noswapfile
-set nobackup
-set nowritebackup
+
 let g:ycm_auto_trigger=0
 inoremap -. • 
-set hlsearch
-set ignorecase
-set smartcase
-set incsearch
-set encoding=utf-8
-set linebreak
-set wrap
+
 map <C-l> :tabn<CR>
 map <C-h> :tabp<CR>
 map <F5> :tabnew<CR>
@@ -161,14 +123,13 @@ let g:go_highlight_trailing_whitespace_error=0
 
 let g:go_auto_type_info = 1
 
-set colorcolumn=120
+
 hi ColorColumn ctermbg=darkgray
-set autoindent
+
 
 
 let mapleader = ","
 let g:mapleader = ","
-
 
 let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
 
@@ -213,6 +174,8 @@ function! VisualSelection(direction, extra_filter) range
   let @" = l:saved_reg
 endfunction
 
+noremap <leader>A :KubeApply<CR>
+noremap <leader>D :KubeDelete<CR>
 cnoremap <Down> <Nop>
 cnoremap <Left> <Nop>
 cnoremap <Right> <Nop>
@@ -239,4 +202,47 @@ function! s:check_back_space() abort
   let col = col('.') - 1
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
+" NERDTree
+" autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
+nnoremap <C-p> :NERDTreeToggle<CR>
+"hi LineNr  guifg=#505050   guibg=Black
 hi Normal guibg=NONE ctermbg=NONE
+set autoindent
+set cc=120
+set clipboard=unnamedplus
+set cmdheight=2
+set colorcolumn=120
+set completeopt=menu,menuone,preview,noselect,noinsert
+set encoding=utf-8
+set expandtab
+set hidden
+set hlsearch
+set ignorecase
+set incsearch
+set linebreak
+set mouse=
+set noai
+set nobackup
+set noswapfile
+set nowb
+set nowritebackup
+set nu rnu
+set shell=bash
+set shiftwidth=2
+set shortmess+=c
+set smartcase
+set smartindent
+set statusline+=%#warningmsg#
+set statusline+=%*
+set statusline+=%{SyntasticStatuslineFlag()}
+set tabstop=2
+set title
+set updatetime=300
+set wrap
+" Moving lines
+nnoremap <A-j> :m+<CR>==
+nnoremap <A-k> :m-2<CR>==
+inoremap <A-j> <Esc>:m+<CR>==gi
+inoremap <A-k> <Esc>:m-2<CR>==gi
+vnoremap <A-j> :m'>+<CR>gv=gv
+vnoremap <A-k> :m-2<CR>gv=gv
