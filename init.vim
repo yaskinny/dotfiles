@@ -2,6 +2,8 @@
 
 " Plugins
 call plug#begin('~/.vim/plugged')
+Plug 'dracula/vim', { 'as': 'dracula' }
+Plug 'tpope/vim-fugitive'
 Plug 'morhetz/gruvbox'
 Plug 'vim-airline/vim-airline'
 Plug 'sheerun/vim-polyglot'
@@ -87,14 +89,16 @@ nnoremap <silent> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list
 nnoremap <silent> <space>p  :<C-u>CocListResume<CR>
 
-
-
-
+func Eatchar(pat)
+	let c = nr2char(getchar(0))
+	return (c =~ a:pat) ? '' : c
+endfunc
 ab traefikapi apiVersion: traefik.containo.us/v1alpha1
 ab certapi apiVersion: cert-manager.io/v1
 ab ingressapi apiVersion: networking.k8s.io/v1
 ab ien if err != nil {
 ab absub 0.0.0.0
+ab k8sns apiVersion: v1<CR>kind: Namespace<CR>metadata:<CR>name: <Left><C-R>=Eatchar('\s')<CR>
 nmap <leader>r :GoRun<CR>
 let g:syntastic_mode_map = { "mode": "passive", "active_filetypes": [], "passive_filetypes": [] }
 
@@ -114,7 +118,7 @@ inoremap -. •
 
 map <C-l> :tabn<CR>
 map <C-h> :tabp<CR>
-map <F5> :tabnew<CR>
+map <F5> :tabnew<CR>:w 
 syntax enable
 filetype plugin indent on
 let g:go_highlight_trailing_whitespace_error=0

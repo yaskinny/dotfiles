@@ -4,6 +4,12 @@
 	defaultBranch = master
 [diff]
 	tool = nvimdiff3
+; [interactive]
+; 	diffFilter = delta --color-only
+; [core]
+; 	pager = delta
+; [delta]
+; 	navigate = true
 [alias]
 	s = status
 	ss = status -s
