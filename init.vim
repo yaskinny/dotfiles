@@ -2,6 +2,9 @@
 
 " Plugins
 call plug#begin('~/.vim/plugged')
+Plug 'yuezk/vim-js'
+Plug 'HerringtonDarkholme/yats.vim'
+Plug 'maxmellon/vim-jsx-pretty'
 Plug 'dracula/vim', { 'as': 'dracula' }
 Plug 'tpope/vim-fugitive'
 Plug 'morhetz/gruvbox'
@@ -18,7 +21,7 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'Shougo/neosnippet.vim'
 Plug 'Shougo/neosnippet-snippets'
 Plug 'unblevable/quick-scope'
-Plug 'pearofducks/ansible-vim'
+"Plug 'pearofducks/ansible-vim'
 Plug 'andrewstuart/vim-kubernetes'
 Plug 'preservim/nerdtree'
 Plug 'altercation/vim-colors-solarized'
@@ -98,8 +101,11 @@ ab certapi apiVersion: cert-manager.io/v1
 ab ingressapi apiVersion: networking.k8s.io/v1
 ab ien if err != nil {
 ab absub 0.0.0.0
-ab k8sns apiVersion: v1<CR>kind: Namespace<CR>metadata:<CR>name: <Left><C-R>=Eatchar('\s')<CR>
-nmap <leader>r :GoRun<CR>
+ab k8sns ---<CR>apiVersion: v1<CR>kind: Namespace<CR>metadata:<CR>name: <Left><C-R>=Eatchar('\s')<CR>
+ab kustomizeapi ---<CR>apiVersion: kustomize.config.k8s.io/v1beta1<CR>kind: Kustomization<CR>
+ab todohash ## !TODO:<CR># 
+ab todoslash /*<CR> * !TODO:<CR>*  
+
 let g:syntastic_mode_map = { "mode": "passive", "active_filetypes": [], "passive_filetypes": [] }
 
 let g:rainbow_active = 1
@@ -115,7 +121,6 @@ map = :GoTest<CR>
 
 let g:ycm_auto_trigger=0
 inoremap -. • 
-
 map <C-l> :tabn<CR>
 map <C-h> :tabp<CR>
 map <F5> :tabnew<CR>:w 
@@ -137,8 +142,10 @@ let g:mapleader = ","
 
 let g:qs_highlight_on_keys = ['f', 'F', 't', 'T']
 
+nmap <leader>y :set ft=yaml<CR>
 nmap <leader>f :GFiles<CR>
 nmap <leader>F :GFiles?<CR>
+nmap <leader>r :GoRun<CR>
 nmap <leader>g :Ag 
 
 nmap gs  <plug>(GrepperOperator)
@@ -250,3 +257,8 @@ inoremap <A-j> <Esc>:m+<CR>==gi
 inoremap <A-k> <Esc>:m-2<CR>==gi
 vnoremap <A-j> :m'>+<CR>gv=gv
 vnoremap <A-k> :m-2<CR>gv=gv
+" Resize Panes
+noremap <silent> <C-S-Left> :vertical resize -2<CR>
+noremap <silent> <C-S-Right> :vertical resize +2<CR>
+noremap <silent> <C-S-Down> :resize -2<CR>
+noremap <silent> <C-S-Up> :resize +2<CR>

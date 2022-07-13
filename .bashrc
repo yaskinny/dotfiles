@@ -87,3 +87,36 @@ makeRandom(){
 }
 
 export PS1='${debian_chroot:+($debian_chroot)}\[\033[02;31m\]\u-[\A]\[\033[00m\]\[\033[01;33m\]\w \n$(a=$?;[[ $a -eq 0 ]] && echo "$a" || echo "\[\033[02;31m\]$a\[\033[00m\]")\[\033[01;33m\]\[\033[38;5;014m\]$(git branch 2> /dev/null | sed -e "/^[^*]/d" -e "s/* \(.*\)/(\1)/")\[\033[00m\]\[\033[01;33m\] ~> \[\033[00m\]'
+
+# yaml 2 json
+y2j() {
+    if [[ -n "${1}" && -f "${1}" ]]; then
+        if [[ -n "${2}" && "${2,,}" = "w" ]]; then
+            if [[ -f "${1/.yaml/.json}" ]]; then
+                printf >&2 '%s\n' "${1/.yaml/.json} already exists"
+                return 1
+            fi
+            yq -o json "${1}" > "${1/.yaml/.json}"
+        else 
+            yq -o json "${1}"
+        fi
+    else
+        printf >&2 '%s\n' "y2j <fileName>"
+    fi
+}
+# json 2 yaml
+j2y() {
+    if [[ -n "${1}"  && -f "${1}" ]]; then
+        if [[ -n "${2}" && "${2,,}" = "w" ]]; then
+            if [[ -f "${1/.json/.yaml}" ]]; then
+                printf >&2 '%s\n' "${1/.json/.yaml} already exists"
+                return 1
+            fi
+            yq -P "${1}" > "${1/.json/.yaml}"
+        else 
+            yq -P "${1}"
+        fi
+    else
+        printf >&2 '%s\n' "j2y <fileName>"
+    fi
+}
